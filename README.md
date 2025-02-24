@@ -5,6 +5,11 @@ Em uma aba do terminal com o diretório aberto digite os seguintes comandos para
 composer install
 npm install
 ```
+Após isso, duplique o .env.example e renomeie para .env, então rode os comandos abaixo.
+```
+php artisan key:generate
+php aritsan migrate
+```
 Para rodar o projeto digite.
 ```
 php artisan serve
