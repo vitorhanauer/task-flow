@@ -14,10 +14,10 @@ class TaskController extends Controller
     {
         $user = User::find(Auth::getUser()->id);
         $tasks = $user->tasks()->where('status','0')->get();
-        $tasksUncompleted = $user->tasks()->where('status','1')->get();
+        $tasksCompleted = $user->tasks()->where('status','1')->get();
         return view('task.index')
                 ->with('tasks',$tasks)
-                ->with('tasksUncompleted',$tasksUncompleted);
+                ->with('tasksCompleted',$tasksCompleted);
     }
 
     public function create()
