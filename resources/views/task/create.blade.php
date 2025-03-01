@@ -1,4 +1,6 @@
-<x-layout>
+@extends('components.layout')
+
+@section('content')
 
     <div class="container my-4">
         <form action="{{ route('task.store') }}" class="form-group" method="post">
@@ -25,5 +27,4 @@
 
         </form>
     </div>
-
-</x-layout>
+@endsection

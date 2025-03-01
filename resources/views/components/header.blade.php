@@ -6,7 +6,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse d-flex justify-content-between me-5" id="navbarNav">
             <ul class="navbar-nav">
                 @auth
                 <li class="nav-item">
@@ -25,6 +25,17 @@
                 </li>
                 @endguest
             </ul>
+            @auth    
+            <div>
+                <a href="{{ route('user.edit') }}">
+                    @if(!empty($user->image_path))
+                        <img src="{{ asset('storage/'.$user->image_path)}}" style="width:50px;height:50px;border-radius:25px">
+                    @else
+                        <span class="btn" style="width:50px;height:50px;border-radius:25px;font-size:25px">{{ $user->name[0] }}</span>
+                    @endif
+                </a>
+            </div>
+            @endauth
         </div>
 
     </div>

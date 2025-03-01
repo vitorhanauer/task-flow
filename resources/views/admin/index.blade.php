@@ -1,4 +1,6 @@
-<x-layout>
+@extends('components.layout')
+
+@section('content')
 
     <div class="login-form container">
 
@@ -20,4 +22,4 @@
 
     </div>
 
-</x-layout>
+@endsection

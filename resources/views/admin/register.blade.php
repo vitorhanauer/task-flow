@@ -1,4 +1,7 @@
-<x-layout>
+@extends('components.layout')
+
+@section('content')
+
 
     <div class="login-form container">
 
@@ -6,12 +9,12 @@
             @csrf
             <div class="col-12 mb-3">
                 <label for="name" class="form-label">Nome</label>
-                <input type="text" name="name" id="name" class="form-control">
+                <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}">
             </div>
 
             <div class="col-12 mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" id="email" class="form-control">
+                <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}">
             </div>
 
             <div class="col-12 mb-3">
@@ -25,4 +28,4 @@
 
     </div>
 
-</x-layout>
+@endsection

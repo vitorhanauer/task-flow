@@ -1,5 +1,6 @@
-<x-layout>
+@extends('components.layout')
 
+@section('content')
     <div class="container my-4">
         <form action="{{ route('task.update',$task->id) }}" class="form-group" method="post">
             @csrf
@@ -29,4 +30,4 @@
         </form>
     </div>
 
-</x-layout>
+@endsection

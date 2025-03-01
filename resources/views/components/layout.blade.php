@@ -8,11 +8,11 @@
 </head>
 <body>
     <header>
-        <x-header />
-        <x-erros />
+        @include('components.header')
+        @include('components.erros')
     </header>
     <main>
-        {{ $slot }}
+        @yield('content')
     </main>
 </body>
 </html>

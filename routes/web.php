@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\GuestMiddleware;
 use App\Http\Middleware\LoginMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -31,4 +32,10 @@ Route::middleware(LoginMiddleware::class)->group(function () {
         Route::put('tarefas/{task}/atualizar', 'update')->name('task.update');
         Route::get('tarefas/{task}/completar','complete')->name('task.complete');
     });
+
+    Route::controller(UserController::class)->group(function(){
+        Route::get('perfil/editar','edit')->name('user.edit');
+        Route::put('perfil/atualizar','update')->name('user.update');
+    });
+
 });

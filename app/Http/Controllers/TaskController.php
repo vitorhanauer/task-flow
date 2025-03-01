@@ -17,12 +17,14 @@ class TaskController extends Controller
         $tasksCompleted = $user->tasks()->where('status','1')->get();
         return view('task.index')
                 ->with('tasks',$tasks)
-                ->with('tasksCompleted',$tasksCompleted);
+                ->with('tasksCompleted',$tasksCompleted)
+                ->with('user',$user);
     }
 
     public function create()
     {
-        return view('task.create');
+        $user = User::find(Auth::getUser()->id);
+        return view('task.create')->with('user',$user);
     }
 
     public function store(TaskFormRequest $request)
@@ -40,7 +42,8 @@ class TaskController extends Controller
 
     public function edit(Task $task)
     {
-        return view('task.edit')->with('task',$task);
+        $user = User::find(Auth::getUser()->id);
+        return view('task.edit')->with('task',$task)->with('user',$user);
     }
 
     public function update(TaskFormRequest $request, Task $task)
