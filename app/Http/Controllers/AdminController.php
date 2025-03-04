@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Middleware\GuestMiddleware;
 use App\Http\Requests\LoginCreateRequest;
 use App\Models\User;
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -13,6 +14,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller implements HasMiddleware
 {
+
+    public function __construct(private UserRepositoryInterface $userRepositoryInterface)
+    {
+        
+    }
 
     public static function middleware()
     {
@@ -43,7 +49,7 @@ class AdminController extends Controller implements HasMiddleware
     public function store(LoginCreateRequest $request)
     {
         try{
-            User::create($request->all());
+            $this->userRepositoryInterface->save($request->all());
             return to_route('login');
         }catch(UniqueConstraintViolationException $e){
             return to_route('admin.register')->withErrors('Email já cadastrado');
@@ -53,7 +59,6 @@ class AdminController extends Controller implements HasMiddleware
     public function logout()
     {
         Auth::logout();
-
         return to_route('login');
     }
 }

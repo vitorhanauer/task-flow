@@ -5,11 +5,11 @@
 
 <div class="container">
     <section class="d-flex flex-column my-3">
-        <h3>Tarefas</h3>
+        <h3>Tarefas Pessoais</h3>
         <ul class="list-group">
             @forelse($tasks as $task)
             <li class="list-group-item d-flex justify-content-between">
-                <span style="font-size: 16px;">{{ $task->title }}</span>
+                <span style="font-size: 16px;">{{$task->title }}</span>
                 <div class="d-flex gap-2">
                     <abbr title="Concluir Tarefa">
                         <a href="{{ route('task.complete',$task->id)}}"><i class="btn bi bi-check-circle-fill btn-sm"></i></a>

@@ -4,12 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginCreateRequest;
 use App\Models\User;
+use App\Repositories\User\UserRepositoryInterface;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class UserController extends Controller
 {
+
+    public function __construct(private UserRepositoryInterface $userRepositoryInterface)
+    {
+        
+    }
+
     public function edit()
     {
         return view('user.edit')->with('user',Auth::user());
@@ -18,17 +26,11 @@ class UserController extends Controller
     public function update(LoginCreateRequest $request)
     {
         try{
-            $user = User::find(Auth::user()->id);
-            $imagePath = $request->file('image');
-            $imagePath ? $user->image_path = $imagePath->store('images','public') : '';
-            $user->fill($request->only(['name','email','password']));
-            $user->save();
+            $image = $request->file('image');
+            $this->userRepositoryInterface->save($request->all(), Auth::user()->id, $image);
             return to_route('user.edit');
         }catch(Exception $e){
-            dd($e->getMessage());
-            return to_route('user.edit')->withErrors('Erro ao atualizar usuário');
+            return to_route('user.edit')->withErrors($e->getMessage());
         }
     }
-
-
 }

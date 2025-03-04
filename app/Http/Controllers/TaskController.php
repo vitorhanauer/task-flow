@@ -5,16 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TaskFormRequest;
 use App\Models\Task;
 use App\Models\User;
+use App\Repositories\Task\TaskRepositoryInterface;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
 
+    public function __construct(private TaskRepositoryInterface $taskRepository)
+    {
+        
+    }
+
     public function index()
     {
         $user = User::find(Auth::getUser()->id);
-        $tasks = $user->tasks()->where('status','0')->get();
-        $tasksCompleted = $user->tasks()->where('status','1')->get();
+        $tasks = $this->taskRepository->allTasks($user);
+        $tasksCompleted = $this->taskRepository->allTasksCompleted($user);        
         return view('task.index')
                 ->with('tasks',$tasks)
                 ->with('tasksCompleted',$tasksCompleted)
@@ -29,14 +36,19 @@ class TaskController extends Controller
 
     public function store(TaskFormRequest $request)
     {
-        $attributes= array_merge($request->only(['title','description']), ['status' => '0', 'users_id' => Auth::getUser()->id]);
-        Task::create($attributes);
-        return to_route('task.index');
+        try{
+            $user = User::find(Auth::getUser()->id);
+            $this->taskRepository->save($request->all(), $user);
+            return to_route('task.index');
+        }catch(Exception $e){
+            dd($e->getMessage());
+            return to_route('task.index');
+        }
     }
 
     public function destroy(Task $task)
     {
-        $task->delete();
+        $this->taskRepository->destroy($task);
         return to_route('task.index');
     }
 
@@ -55,8 +67,7 @@ class TaskController extends Controller
 
     public function complete(Task $task)
     {
-        $task->status = !$task->status;
-        $task->save();
+        $this->taskRepository->complete($task);
         return to_route('task.index');
     }
 

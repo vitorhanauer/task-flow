@@ -52,4 +52,10 @@ class User extends Authenticatable
         return $this->hasMany(Task::class,"users_id");
     }
 
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class,'group_user','user_id','group_id');
+    }
+
+
 }
