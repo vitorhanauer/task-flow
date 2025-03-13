@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TaskCreated;
 use App\Http\Requests\TaskFormRequest;
+use App\Mail\CreatedTask;
 use App\Models\Task;
 use App\Models\User;
 use App\Repositories\Task\TaskRepositoryInterface;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
@@ -39,6 +42,7 @@ class TaskController extends Controller
         try{
             $user = User::find(Auth::getUser()->id);
             $this->taskRepository->save($request->all(), $user);
+            event(new TaskCreated($user));
             return to_route('task.index');
         }catch(Exception $e){
             dd($e->getMessage());

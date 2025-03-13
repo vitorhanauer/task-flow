@@ -6,11 +6,32 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\GuestMiddleware;
 use App\Http\Middleware\LoginMiddleware;
+use App\Http\Middleware\VerificationEmailMiddleware;
+use App\Mail\VerifyEmail;
+use App\Models\User;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return to_route('login');
 });
+
+Route::get('/email/verify/{user}/{hash}', function (User $user, string $hash) {
+    if($user->token_email !== $hash){
+        return redirect('/admin');
+    }
+    $user->markEmailAsVerified();
+    return redirect('/admin');
+})->name('verification.verify');
+
+Route::get('/email/notice', function () {
+    Auth::logout();
+    return to_route('login')->withErrors(['Verique seu email para realizar o login']);
+})->middleware('auth')->name('verification.notice');
+
 
 
 Route::controller(AdminController::class)->group(function () {
@@ -23,7 +44,7 @@ Route::controller(AdminController::class)->group(function () {
 
 
 
-Route::middleware(LoginMiddleware::class)->group(function () {
+Route::middleware(['auth','verified'])->group(function () {
     Route::controller(TaskController::class)->group(function () {
         Route::get('tarefas', 'index')->name('task.index');
         Route::get('tarefas/criar', 'create')->name('task.create');

@@ -4,12 +4,12 @@ namespace App\Repositories\User;
 
 use App\Models\User;
 use Exception;
-
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Password;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -26,7 +26,11 @@ class UserRepository implements UserRepositoryInterface
     {
         DB::beginTransaction();
         try{
-            $user = User::create($attributes); 
+            $user = new User();
+            $user->fill($attributes);
+            $token_email = Password::createToken($user);
+            $user->token_email = $token_email;
+            $user->save();
             DB::commit();
             return $user;
         }catch(Exception $e){

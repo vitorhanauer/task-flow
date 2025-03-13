@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\VerifyEmail;
 use App\Http\Middleware\GuestMiddleware;
 use App\Http\Requests\LoginCreateRequest;
-use App\Models\User;
 use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\Request;
@@ -49,8 +49,9 @@ class AdminController extends Controller implements HasMiddleware
     public function store(LoginCreateRequest $request)
     {
         try{
-            $this->userRepositoryInterface->save($request->all());
-            return to_route('login');
+            $user = $this->userRepositoryInterface->save($request->all());
+            event(new VerifyEmail($user));
+            return to_route('login')->withErrors(['Verifique seu email para confirmar a criação de sua conta']);
         }catch(UniqueConstraintViolationException $e){
             return to_route('admin.register')->withErrors('Email já cadastrado');
         }

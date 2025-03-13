@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h2>Meus Grupos</h2>
-        @if(empty($user->groups))    
+        @if(isset($user->groups))    
         <ul class="list-group">
             @foreach ($user->groups as $group) 
                 <li class="list-group-item">
