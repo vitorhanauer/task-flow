@@ -10,6 +10,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Storage;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -47,7 +48,11 @@ class UserRepository implements UserRepositoryInterface
         DB::beginTransaction();
         try{
             $user = User::find($id);
-            isset($image) ? $user->image_path = $image->store('images','public') : "";
+            if(isset($image)){
+                $imagePath = $image->store('images','public');
+                Storage::disk('public')->delete($user->image_path??"");
+                $user->image_path = $imagePath;
+            }
             $attributes['password'] ?? $user->password = Hash::make($attributes['password']);
             $user->email = $attributes['email'];
             $user->name = $attributes['name'];
