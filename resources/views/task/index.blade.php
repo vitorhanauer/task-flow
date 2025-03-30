@@ -4,7 +4,7 @@
 @section('content')
 
 <div class="container">
-    <section class="d-flex flex-column my-3">
+    <section class="d-flex flex-column">
         <h3>Tarefas Pessoais</h3>
         <ul class="list-group">
             @forelse($tasks as $task)

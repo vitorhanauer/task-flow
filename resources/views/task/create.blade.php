@@ -1,8 +1,8 @@
 @extends('components.layout')
 
 @section('content')
-
-    <div class="container my-4">
+<div class="container">
+        <h2>Criar Tarefa</h2>
         <form action="{{ route('task.store') }}" class="form-group" method="post">
             @csrf
             <div class="row mb-3">

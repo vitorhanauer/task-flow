@@ -8,11 +8,18 @@
 </head>
 <body>
     <header>
-        @include('components.header')
-        @include('components.erros')
+        @guest
+            @include('components.header')
+        @endguest
     </header>
-    <main>
-        @yield('content')
+    <main class="d-flex">
+        @auth
+            @include('components.sidebar')
+        @endauth
+        <section class="d-flex flex-column py-5" style="width: 100%">
+            @include('components.erros')
+            @yield('content')
+        </section>
     </main>
 </body>
 </html>
