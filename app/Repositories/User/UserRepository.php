@@ -64,4 +64,16 @@ class UserRepository implements UserRepositoryInterface
             throw new Exception("Erro ao atualizar usuário");
         }
     }
+
+    public function all()
+    {
+        return User::all();
+    }
+
+    public function findByName(string $name)
+    {
+        $user = User::where("name",'like',"%$name%")->get();
+        return $user;
+    }
+
 }

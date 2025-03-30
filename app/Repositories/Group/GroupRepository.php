@@ -4,6 +4,7 @@ namespace App\Repositories\Group;
 
 use App\Models\Group;
 use App\Models\GroupUser;
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -57,6 +58,14 @@ class GroupRepository implements GroupRepositoryInterface
             if($task->status == 1) $tasksCompleted[] = $task;
         }
         return $tasksCompleted;
+    }
+
+    public function insertUserOnGroup(Group $group, User $user)
+    {
+        $groupUser = new GroupUser();
+        $groupUser->user_id = $user->id;
+        $groupUser->group_id = $group->id;
+        $groupUser->save();
     }
 
 }

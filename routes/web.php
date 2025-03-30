@@ -69,6 +69,8 @@ Route::middleware(['auth','verified'])->group(function () {
         Route::delete('grupo/{task}/deletar', 'destroy')->name('group.destroy');
         Route::get('grupo/{task}/editar', 'edit')->name('group.edit');
         Route::put('grupo/{task}/atualizar', 'update')->name('group.update');
+        Route::get('grupo/{group}/pesquisar','search')->name('group.search');
+        Route::patch('grupo/{user}/adicionar/{group}','addUser')->name('group.addUser');
     });
 
 });
