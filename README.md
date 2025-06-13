@@ -1,6 +1,6 @@
 # Task Flow 🗂️
 
-![Laravel](https://img.shields.io/badge/Laravel-10.x-red)
+![Laravel](https://img.shields.io/badge/Laravel-11.x-red)
 ![PHP](https://img.shields.io/badge/PHP-8.x-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Status](https://img.shields.io/badge/status-Em%20desenvolvimento-yellow)
@@ -82,62 +82,78 @@ CRUD de Tarefas ──► Repository ──► Models ──► Database
 Grupos ──► Controle de membros ──► Tarefas em Grupo
 ```
 ## ⚙️ Como Executar o Projeto Localmente
-###Pré-requisitos
-PHP 8.x
-Composer
-MySQL
-Node.js e NPM (para assets)
+### Pré-requisitos
+- PHP 8.x
+- Composer
+- MySQL
+- Node.js e NPM (para assets)
 
-###Passo a Passo
+### Passo a Passo
 
 #### Clone o repositório
+```
 git clone https://github.com/seu-usuario/task-flow.git
+```
 
 #### Acesse o diretório
+```
 cd task-flow
+```
 
 #### Instale as dependências PHP
+```
 composer install
+```
 
 #### Instale as dependências JS
+```
 npm install && npm run dev
+```
 
 #### Copie o arquivo de configuração de ambiente
+```
 cp .env.example .env
+```
 
 #### Gere a chave da aplicação
+```
 php artisan key:generate
+```
 
-#### Configure o .env com as credenciais do banco e serviço de e-mail (ex: Mailtrap)
+#### Configure o .env com as credenciais do banco e serviço de e-mail
 
 #### Rode as migrations
+```
 php artisan migrate
+```
 
 #### Suba o servidor local
+```
 php artisan serve
+```
 
 ## 🎯 Melhorias Futuras
-Testes automatizados com PHPUnit
-Implementação de notificações in-app
-Upload de arquivos para tarefas
-Logs e auditoria de atividades
-Melhorias de UI com TailwindCSS ou Inertia.js + Vue.js
-CI/CD integrado ao GitHub Actions
+- Testes automatizados com PHPUnit
+- Implementação de notificações in-app
+- Upload de arquivos para tarefas
+- Logs e auditoria de atividades
+- Melhorias de UI com TailwindCSS ou Inertia.js + Vue.js
+- CI/CD integrado ao GitHub Actions
 
 ## 💻 Tecnologias Utilizadas
-Stack	Descrição
-Backend	PHP 8.3 / Laravel 10.x
-Banco de Dados	MySQL
-ORM	Eloquent
-Templating	Blade
-Autenticação	Laravel Breeze / Sanctum (dependendo da implementação)
-Envio de E-mails	Mailtrap
-Gerenciamento de Dependências	Composer / NPM
-Controle de versão	Git e GitHub
+|Stack|Descrição|
+|-|-|
+|Backend|PHP 8.2 / Laravel 11.31|
+|Banco de Dados|	MySQL|
+|ORM|	Eloquent|
+|Templating|	Blade|
+|Envio de E-mails|	Mailtrap|
+|Gerenciamento de Dependências|	Composer / NPM|
+|Controle de versão|	Git e GitHub|
 
 ## 📩 Contato
-LinkedIn: https://www.linkedin.com/in/vitorhanauer/
-E-mail: hanauer.fo@gmail.com
+- LinkedIn: https://www.linkedin.com/in/vitorhanauer/
+- E-mail: hanauer.fo@gmail.com
 
 ## ⭐ Este projeto foi desenvolvido com foco no aprendizado, boas práticas de desenvolvimento backend e arquitetura escalável.
 
